@@ -11,7 +11,7 @@ class CashFlowCreate extends Component {
     this.state = {
       categories: [],
       form: {
-        isExpense: false,
+        is_expense: false,
         amount: 0,
         category: "",
         description: ""
@@ -29,11 +29,27 @@ class CashFlowCreate extends Component {
     this.setState({ form });
   };
 
+  radioButtonHandler = (name, value) => {
+    let form = { ...this.state.form };
+    form[name] = value;
+    this.setState({ form });
+  };
+
   onFetchCategories = () => {
     mawalet.get("/category").then(response => {
-      console.log("[onFetchCategories] response", response);
       this.setState({ categories: response.data.data });
     });
+  };
+
+  onSubmit = async e => {
+    e.preventDefault();
+    const response = await mawalet.post("/cash-flow", { ...this.state.form });
+
+    if (response.data.err_no === 0) {
+      this.props.history.push('/');
+    } else {
+      alert("Oops, something wrong!");
+    }
   };
 
   render() {
@@ -41,17 +57,31 @@ class CashFlowCreate extends Component {
       <div>
         <Divider />
         <div className="ui segment">
-          <form className="ui form">
+          <form className="ui form" onSubmit={this.onSubmit}>
             <div className="grouped fields">
               <div className="field">
                 <div className="ui radio checkbox">
-                  <input type="radio" name="expense" tabIndex="0" />
+                  <input
+                    type="radio"
+                    name="expense"
+                    tabIndex="0"
+                    defaultChecked={!this.state.form.is_expense}
+                    onChange={() =>
+                      this.radioButtonHandler("is_expense", false)
+                    }
+                  />
                   <label>Income</label>
                 </div>
               </div>
               <div className="field">
                 <div className="ui radio checkbox">
-                  <input type="radio" name="expense" tabIndex="0" />
+                  <input
+                    type="radio"
+                    name="expense"
+                    tabIndex="0"
+                    defaultChecked={this.state.form.is_expense}
+                    onChange={() => this.radioButtonHandler("is_expense", true)}
+                  />
                   <label>Outcome</label>
                 </div>
               </div>
@@ -66,9 +96,15 @@ class CashFlowCreate extends Component {
             </div>
             <div className="field">
               <label>Category</label>
-              <select className="ui fluid dropdown" onChange={(event) => this.inputHandler(event, "category")}>
+              <select
+                className="ui fluid dropdown"
+                onChange={event => this.inputHandler(event, "category")}
+              >
+                <option>-- Select Category --</option>
                 {this.state.categories.map(category => (
-                  <option value={category.category_name} key={category._id}>{category.category_name}</option>
+                  <option value={category.category_name} key={category._id}>
+                    {category.category_name}
+                  </option>
                 ))}
               </select>
             </div>

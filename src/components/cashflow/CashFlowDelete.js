@@ -5,7 +5,7 @@ import Modal from "../modal";
 
 class CashFlowDelete extends Component {
   renderContent() {
-    return "Are you sure you want to delete this stream?";
+    return "Are you sure you want to delete this item?";
   }
 
   renderActions() {
@@ -22,7 +22,7 @@ class CashFlowDelete extends Component {
   }
 
   onDelete = () => {
-    console.log("[CashFlowDelete][onDelete] di delete anday");
+    this.props.hitory.push("/");
   };
 
   render() {
@@ -31,7 +31,7 @@ class CashFlowDelete extends Component {
         title="Delete"
         content={this.renderContent()}
         actions={this.renderActions()}
-        onDismiss={() => console.log("modal")}
+        onDismiss={() => this.props.history.push("/")}
       />
     );
   }

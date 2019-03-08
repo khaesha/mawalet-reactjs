@@ -46,9 +46,9 @@ class CashFlowList extends Component {
             <td className={isExpense}>{cashflow.amount}</td>
             <td>{cashflow.category}</td>
             <td>{cashflow.description}</td>
-            <td className="center aligned">
-              <Link to={`/cash-flow/delete?id=${cashflow._id}`}>Delete</Link>
-            </td>
+            {/* <td className="center aligned">
+              <Link to={`/cash-flow/delete/${cashflow._id}`}>Delete</Link>
+            </td> */}
           </tr>
         );
       });
@@ -65,7 +65,6 @@ class CashFlowList extends Component {
     return (
       <div>
         <Divider />
-        {/* <Balance value={this.state.balance} /> */}
         <div className="ui grid">
           <div className="four column row">
             <div className="left floated column">
@@ -86,7 +85,7 @@ class CashFlowList extends Component {
               <th>Amount</th>
               <th>Category</th>
               <th>Description</th>
-              <th>&nbsp;</th>
+              {/* <th>&nbsp;</th> */}
             </tr>
           </thead>
           <tbody>{this.renderList()}</tbody>
