@@ -10,8 +10,7 @@ class Logout extends Component {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
         .init({
-          clientId:
-            "927877818783-ipfbrba7jtrd8oedajt6dp6s5go69492.apps.googleusercontent.com",
+          clientId: "",
           scope: "email"
         })
         .then(() => {
