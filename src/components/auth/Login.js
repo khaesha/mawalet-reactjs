@@ -7,20 +7,22 @@ import GeneralAuth from "./GeneralAuth";
 import history from "../../history";
 
 class Login extends Component {
-  onSubmitHandler = status => {
-    if (!status.error) {
-      history.push(status.pathname);
+  componentDidMount() {
+    if (
+      window.localStorage.getItem("isSignedIn") &&
+      window.localStorage.getItem("isSignedIn") === "1"
+    ) {
+      history.push("/dashboard");
     }
-  };
-
+  }
   render() {
     return (
       <div>
         <Divider />
         <div className="ui segment">
-          <GeneralAuth onSubmit={this.onSubmitHandler} />
+          <GeneralAuth />
           <Divider />
-          <GoogleAuth onSubmit={this.onSubmitHandler} />
+          <GoogleAuth />
         </div>
       </div>
     );

@@ -31,7 +31,7 @@ class App extends Component {
       routes = (
         <div>
           <Header />
-          <Route path="/" exact component={CashFlowList} />
+          <Route path="/dashboard" exact component={CashFlowList} />
           <Route path="/cash-flow/create" exact component={CashFlowCreate} />
           <Route
             path="/cash-flow/delete/:id"

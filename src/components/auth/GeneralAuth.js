@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import history from "../../history";
 import mawalet from "../../api/mawalet";
 
 class GeneralAuth extends Component {
@@ -13,17 +14,15 @@ class GeneralAuth extends Component {
   }
 
   onSubmitHandler = async () => {
-    console.log("[GeneralAuth][onSubmitHandler] init");
-
-    const response = await mawalet.post("/auth/getToken", { ...this.state });
+    const response = await mawalet.post("/auth/login", { ...this.state });
 
     if (response.data.err_no === 0) {
       // set localStorage
-      window.localStorage.setItem("isLoggedIn", 1);
+      window.localStorage.setItem("isSignedIn", 1);
       window.localStorage.setItem("token", response.data.data.token);
       window.localStorage.setItem("auth", "auth");
 
-      this.props.onSubmit({ error: false, pathname: "/" });
+      history.push("/dashboard");
     } else {
       // give error notice
       alert(response.data.message);

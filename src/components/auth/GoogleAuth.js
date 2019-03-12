@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 
-import history from "../../history";
+import history from '../../history';
 
 class GoogleAuth extends Component {
   componentDidMount() {
+    this.onLoadGoogleApi();
+  }
+
+  onLoadGoogleApi() {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
         .init({
@@ -19,7 +23,7 @@ class GoogleAuth extends Component {
           this.auth.isSignedIn.listen(this.onAuthChange);
         })
         .catch(err => {
-          console.log("[GoogleAuth] componentDidMount err", err);
+          console.log("[GoogleAuth] onLoadGoogleApi err", err);
         });
     });
   }
@@ -44,12 +48,11 @@ class GoogleAuth extends Component {
       window.localStorage.setItem("id_token", id_token);
       window.localStorage.setItem("token_type", token_type);
 
-      this.props.onSubmit({ error: false, pathname: "/" });
+      history.push('/dashboard');
     } else {
       // Clear session
       this.auth.signOut();
-      window.localStorage.clear();
-      history.push("/");
+      // window.localStorage.clear();
     }
   };
 

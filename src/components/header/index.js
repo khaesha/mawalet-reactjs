@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Divider } from "semantic-ui-react";
 
-class Header extends Component {
-  onLogout = () => {
-    alert('Logout');
-  }
+import { Logout } from "../auth";
 
+class Header extends Component {
   render() {
     return (
       <div>
@@ -19,8 +17,8 @@ class Header extends Component {
           <NavLink to="/summary/report" exact className="item">
             Report
           </NavLink>
-          <NavLink to="#" className="ui right floated item" onClick={this.onLogout}>
-            Logout
+          <NavLink to="/logout" className="ui right floated item">
+            <Logout />
           </NavLink>
         </div>
       </div>
